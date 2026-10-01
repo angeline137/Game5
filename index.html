@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>老日香：百年餅舖實習生</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5efe0;--card:#fffaf0;--ink:#4a2f1d;--sub:#7a5a43;--green:#a9c8a0;--green-d:#5f8a5a;--wood:#8b5a2b;--herb:#4b2e1a;--line:#dccfb3;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#2a1e15;--card:#3a2a1d;--ink:#f3e8d2;--sub:#cdb89a;--green:#6f9468;--green-d:#9fc796;--wood:#c48a4c;--line:#5a4530}}
+:root[data-theme="dark"]{--bg:#2a1e15;--card:#3a2a1d;--ink:#f3e8d2;--sub:#cdb89a;--green:#6f9468;--green-d:#9fc796;--wood:#c48a4c;--line:#5a4530}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--bg);color:var(--ink);font-family:'Noto Serif TC','PMingLiU',serif;min-height:100vh;
+background-image:repeating-linear-gradient(90deg,transparent 0 46px,rgba(139,90,43,.05) 46px 48px)}
+.card{background:var(--card);border:2px solid var(--line);border-radius:1.25rem;box-shadow:0 6px 0 var(--line),0 12px 24px rgba(74,47,29,.12)}
+.btn{background:var(--wood);color:#fff8ea;border-radius:9999px;padding:.85rem 2rem;font-weight:700;letter-spacing:.1em;box-shadow:0 5px 0 #5a3a1a;transition:transform .1s,box-shadow .1s,filter .2s;cursor:pointer}
+.btn:hover{filter:brightness(1.1)}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 #5a3a1a}
+.btn.green{background:var(--green-d);box-shadow:0 5px 0 #3d5f39;color:#fff}
+.btn.green:active{box-shadow:0 1px 0 #3d5f39}
+.btn.red{background:#b5482f;box-shadow:0 5px 0 #7d2e1c}
+.btn.red:active{box-shadow:0 1px 0 #7d2e1c}
+.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--wood);box-shadow:none}
+.btn:disabled{opacity:.45;pointer-events:none}
+.page{display:none;animation:fade .5s ease}
+.page.on{display:flex}
+@keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.pick{cursor:pointer;transition:transform .2s,border-color .2s}
+.pick:hover{transform:translateY(-6px);border-color:var(--green-d)}
+.pick.sel{border-color:var(--green-d);background:color-mix(in srgb,var(--green) 30%,var(--card))}
+/* sifting */
+.sieve{width:200px;height:70px;border-radius:12px 12px 50% 50%/12px 12px 40px 40px;background:repeating-linear-gradient(45deg,#b58a58 0 4px,#8b5a2b 4px 8px);border:3px solid #5a3a1a;transition:transform .3s}
+.sieve.shake{animation:shake .5s}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-26px) rotate(-4deg)}50%{transform:translateX(26px) rotate(4deg)}80%{transform:translateX(-14px)}}
+.flour{position:absolute;width:6px;height:6px;border-radius:50%;background:#fffdf5;box-shadow:0 0 3px rgba(0,0,0,.2);animation:fall 1.1s ease-in forwards}
+@keyframes fall{from{opacity:1;transform:translateY(0)}to{opacity:.3;transform:translateY(150px)}}
+.bar{height:18px;border-radius:9999px;background:var(--line);overflow:hidden;border:2px solid var(--line)}
+.bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--green-d));transition:width .5s}
+/* mold */
+.mold{width:min(300px,80vw);height:190px;border:6px solid #6b4a2a;border-top:none;border-radius:0 0 14px 14px;background:#e4d8bd;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}
+.layer{transition:height .9s ease}
+.rice{background:#fffdf3;background-image:radial-gradient(#efe6cf 1px,transparent 1px);background-size:8px 8px}
+#herbL{background:var(--herb);height:0;position:relative}
+#herbL::after{content:"";position:absolute;inset:0;background-image:radial-gradient(#7a5a30 1.5px,transparent 2px);background-size:9px 9px}
+.toast{background:var(--green-d);color:#fff;border-radius:.9rem;padding:.7rem 1.2rem;font-weight:700;animation:fade .4s}
+/* stamps */
+.stamp{width:88px;height:88px;border-radius:1rem;background:linear-gradient(145deg,#c9985e,#8b5a2b);color:#fff3d8;font-size:1.5rem;font-weight:900;display:flex;align-items:center;justify-content:center;border:3px solid #5a3a1a;box-shadow:0 6px 0 #5a3a1a;cursor:pointer;transition:transform .15s,box-shadow .15s;text-shadow:0 2px 0 #5a3a1a}
+.stamp:hover{transform:translateY(-4px)}
+.stamp.sel{outline:4px solid var(--green-d);transform:translateY(-4px)}
+.cake{width:150px;height:110px;border-radius:14px;background:#fbf6e6;border:3px solid #d8c9a3;box-shadow:inset 0 -8px 0 #efe4c6,0 6px 0 #cbb98c;display:flex;align-items:center;justify-content:center;font-size:1.7rem;font-weight:900;color:#7a4a25;text-align:center;line-height:1.1;padding:6px}
+.cake{position:relative}
+.cake.sesame::after{content:"";position:absolute;left:6px;right:6px;top:3px;height:46%;pointer-events:none;background:radial-gradient(ellipse 4px 2.5px at 10% 25%,#fff 0 55%,#bfa970 78%,#0000 90%),
+radial-gradient(ellipse 4px 2.5px at 28% 62%,#fff 0 55%,#bfa970 78%,#0000 90%),
+radial-gradient(ellipse 4px 2.5px at 46% 22%,#fff 0 55%,#bfa970 78%,#0000 90%),
+radial-gradient(ellipse 4px 2.5px at 64% 60%,#fff 0 55%,#bfa970 78%,#0000 90%),
+radial-gradient(ellipse 4px 2.5px at 82% 24%,#fff 0 55%,#bfa970 78%,#0000 90%),
+radial-gradient(ellipse 4px 2.5px at 20% 88%,#fff 0 55%,#bfa970 78%,#0000 90%),
+radial-gradient(ellipse 4px 2.5px at 54% 86%,#fff 0 55%,#bfa970 78%,#0000 90%),
+radial-gradient(ellipse 4px 2.5px at 90% 66%,#fff 0 55%,#bfa970 78%,#0000 90%),
+radial-gradient(ellipse 4px 2.5px at 72% 40%,#fff 0 55%,#bfa970 78%,#0000 90%),
+radial-gradient(ellipse 4px 2.5px at 37% 44%,#fff 0 55%,#bfa970 78%,#0000 90%)}
+.cake.dbl{background:linear-gradient(#fffefa 0 49%,#e6dcc2 49% 51%,#fffefa 51%);border-color:#e6dcc2}
+.disc{width:150px;height:150px;border-radius:50%;background:#fffefa;border:3px solid #ece4cf;box-shadow:inset 0 -8px 0 #f1ead8,0 6px 0 #cfc4a6;display:flex;align-items:center;justify-content:center;color:#c8321f;font-weight:900;text-align:center;position:relative;line-height:1}
+.disc::before{content:"";position:absolute;inset:10%;border-radius:50%;border:3px solid currentColor;opacity:.85}
+.disc.brown{background:#a47349;border-color:#85592f;color:#e0402a;text-shadow:0 1px 0 #f3d9b6;box-shadow:inset 0 -8px 0 #8d6038,0 6px 0 #6b4522}
+#stamps.red .stamp{background:linear-gradient(145deg,#e0533a,#a82a18);border-color:#6d1a0e;box-shadow:0 6px 0 #6d1a0e;text-shadow:0 2px 0 #6d1a0e}
+.btn.ghost.on{background:var(--green-d);color:#fff;border-color:var(--green-d)}
+.knock{animation:knock .7s ease}
+@keyframes knock{0%{transform:translateY(0)}30%{transform:translateY(-24px) rotate(-6deg)}55%{transform:translateY(8px) scale(1.06)}100%{transform:none}}
+.pow{font-size:5rem;font-weight:900;color:#b5482f;text-shadow:3px 3px 0 #fff3d8;animation:pow 1s ease forwards;position:absolute;pointer-events:none}
+@keyframes pow{0%{transform:scale(.2) rotate(-15deg);opacity:0}30%{transform:scale(1.3) rotate(6deg);opacity:1}100%{transform:scale(1) rotate(0);opacity:0}}
+/* steam */
+.pot{width:220px;height:110px;background:linear-gradient(#b58a58,#8b5a2b);border:4px solid #5a3a1a;border-radius:10px 10px 30px 30px;position:relative;margin-top:-6px}
+.lid{width:250px;height:34px;background:#c9985e;border:4px solid #5a3a1a;border-radius:50% 50% 10px 10px/100% 100% 10px 10px}
+.puff{position:absolute;bottom:0;left:50%;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.75);filter:blur(6px);animation:puff 2.6s infinite ease-out}
+@keyframes puff{0%{transform:translate(-50%,0) scale(.5);opacity:0}20%{opacity:.9}100%{transform:translate(calc(-50% + var(--dx)),-120px) scale(2.4);opacity:0}}
+.hint{animation:pulse 1s infinite alternate}
+@keyframes pulse{to{transform:scale(1.06)}}
+.medal{animation:pop .8s cubic-bezier(.2,1.6,.4,1)}
+@keyframes pop{from{transform:scale(0) rotate(-20deg)}to{transform:none}}
+</style>
+</head>
+<body>
+<main class="max-w-xl mx-auto px-4 py-6 min-h-screen flex flex-col">
+  <div id="dots" class="flex justify-center gap-2 mb-4 opacity-0 transition-opacity"></div>
+
+  <!-- 1 首頁 -->
+  <section id="p1" class="page on flex-1 flex-col items-center justify-center text-center gap-5">
+    <div class="text-6xl">🌿</div>
+    <p class="tracking-[.4em] text-sm" style="color:var(--sub)">老日香 ・ 百年傳統糕點</p>
+    <h1 class="text-4xl sm:text-5xl font-black leading-tight">百年餅舖實習生</h1>
+    <p class="max-w-sm" style="color:var(--sub)">體驗老日香百年米香與經典糕仔手作工藝</p>
+    <div class="card p-4 text-sm max-w-sm" style="color:var(--sub)">綠豆糕、心願糕、雙糕潤——靈魂在於一撮「百草粉」。今天，換你上手。</div>
+    <button class="btn text-lg mt-2" onclick="go(2)">開始實習</button>
+  </section>
+
+  <!-- 2 選品項 -->
+  <section id="p2" class="page flex-1 flex-col justify-center gap-5">
+    <h2 class="text-2xl font-black text-center">選擇今天要製作的品項</h2>
+    <div class="grid sm:grid-cols-2 gap-4">
+      <div class="card pick p-5 text-center" onclick="pickItem('wish',this)">
+        <div class="flex justify-center -space-x-4 mb-3"><div class="disc" style="width:80px;height:80px;font-size:1.7rem">平</div><div class="disc brown" style="width:80px;height:80px;font-size:1.7rem">家</div></div>
+        <h3 class="text-xl font-black">傳統心願糕仔</h3>
+        <p class="text-sm mt-2" style="color:var(--sub)">熟米粉拌麥芽糖，木模壓實敲出，圓潤糕面一個紅字祈願，綿密粉感一口回到古早味。</p>
+      </div>
+      <div class="card pick p-5 text-center" onclick="pickItem('double',this)">
+        <div class="cake dbl sesame mx-auto mb-3" style="width:96px;height:68px;padding:0"></div>
+        <h3 class="text-xl font-black">老日香雙糕潤</h3>
+        <p class="text-sm mt-2" style="color:var(--sub)">雙層糯米夾著百草粉香氣，面灑白芝麻，軟潤有層次。</p>
+      </div>
+    </div>
+    <button id="b2" class="btn self-center" disabled onclick="go(3)">進入工坊</button>
+  </section>
+
+  <!-- 3 過篩 -->
+  <section id="p3" class="page flex-1 flex-col items-center justify-center gap-5 text-center">
+    <p class="text-sm tracking-widest" style="color:var(--green-d)">步驟一</p>
+    <h2 id="h3t" class="text-2xl font-black">過篩糯米粉</h2>
+    <div class="relative h-56 w-full flex flex-col items-center">
+      <div id="sieve" class="sieve mt-2"></div>
+      <div id="fx" class="absolute top-16 left-1/2 w-40 -translate-x-1/2 h-40"></div>
+      <div class="absolute bottom-0 w-52 h-3 rounded-full" style="background:var(--line)"></div>
+      <div id="pile" class="absolute bottom-3 rounded-t-full bg-[#fffdf5]" style="width:20px;height:0;transition:all .5s;box-shadow:0 0 6px rgba(0,0,0,.15)"></div>
+    </div>
+    <div class="w-full max-w-sm"><div class="bar"><i id="bar3"></i></div><p id="pct3" class="mt-1 font-bold">0% / 100%</p></div>
+    <p id="msg3" class="text-sm" style="color:var(--sub)">細緻米粉，才有綿密口感。點擊 3 次完成。</p>
+    <button id="b3" class="btn" onclick="sift()">滑動／篩粉</button>
+  </section>
+
+  <!-- 4 百草粉 -->
+  <section id="p4" class="page flex-1 flex-col items-center justify-center gap-5 text-center">
+    <p class="text-sm tracking-widest" style="color:var(--green-d)">步驟二</p>
+    <h2 class="text-2xl font-black">鋪入老日香靈魂百草粉</h2>
+    <div class="mold">
+      <div class="layer rice" id="topL" style="height:35%"></div>
+      <div class="layer" id="herbL"></div>
+      <div class="layer rice" style="height:35%"></div>
+    </div>
+    <p class="text-xs" style="color:var(--sub)">模具剖面：米粉 ／ 百草粉 ／ 米粉</p>
+    <div id="t4" class="h-12 flex items-center"></div>
+    <div class="flex gap-3">
+      <button id="b4" class="btn green" onclick="herb()">均勻撒入百草粉</button>
+      <button id="n4" class="btn hidden" onclick="go(5)">下一步</button>
+    </div>
+  </section>
+
+  <!-- 4b 心願糕：調色入圓模 -->
+  <section id="p4b" class="page flex-1 flex-col items-center justify-center gap-5 text-center">
+    <p class="text-sm tracking-widest" style="color:var(--green-d)">步驟二</p>
+    <h2 class="text-2xl font-black">熟米粉拌麥芽糖</h2>
+    <p class="text-sm" style="color:var(--sub)">先選糕體：白潤糕，或綠豆糕；再拌入麥芽糖揉成粉團。</p>
+    <div class="flex gap-3">
+      <button class="btn ghost colorbtn" onclick="pickColor('white',this)">白潤糕</button>
+      <button class="btn ghost colorbtn" onclick="pickColor('brown',this)">綠豆糕</button>
+    </div>
+    <div class="relative w-48 h-48 flex items-center justify-center">
+      <div class="absolute inset-0 rounded-full" style="border:8px solid #6b4a2a;background:#e4d8bd"></div>
+      <div id="fill" class="rounded-full" style="width:0;height:0;transition:all .8s;background:#fbf6e6"></div>
+    </div>
+    <div id="t4b" class="h-12 flex items-center"></div>
+    <div class="flex gap-3">
+      <button id="b4b" class="btn green" disabled onclick="press()">拌入麥芽糖</button>
+      <button id="n4b" class="btn hidden" onclick="go(5)">下一步</button>
+    </div>
+  </section>
+
+  <!-- 5 壓模 -->
+  <section id="p5" class="page flex-1 flex-col items-center justify-center gap-5 text-center">
+    <p class="text-sm tracking-widest" style="color:var(--green-d)">步驟三</p>
+    <h2 id="h5t" class="text-2xl font-black">挑選壓模字樣與脫模</h2>
+    <p id="sub5" class="text-sm" style="color:var(--sub)"></p>
+    <div class="grid grid-cols-4 gap-3" id="stamps"></div>
+    <div class="relative h-44 flex items-center justify-center w-full">
+      <div id="cake" class="cake opacity-40" style="font-size:1rem">選一個壓模</div>
+      <div id="pow" class="pow" style="display:none">叩！</div>
+    </div>
+    <div class="flex gap-3">
+      <button id="f5" class="btn green hidden" disabled onclick="fill5()">填粉壓實</button>
+      <button id="b5" class="btn" disabled onclick="knock()">敲模脫模</button>
+      <button id="n5" class="btn green hidden" onclick="after5()">送入蒸籠</button>
+    </div>
+  </section>
+
+  <!-- 6 蒸煮 -->
+  <section id="p6" class="page flex-1 flex-col items-center justify-center gap-4 text-center">
+    <p class="text-sm tracking-widest" style="color:var(--green-d)">步驟四</p>
+    <h2 class="text-2xl font-black">蒸煮關火時間大挑戰</h2>
+    <p class="text-sm" style="color:var(--sub)">倒數 5 → 0 秒，在<b>第 2 秒</b>按下關火！</p>
+    <div class="relative w-64 h-40 flex flex-col items-center justify-end" id="steamBox"></div>
+    <div class="flex flex-col items-center -mt-1">
+      <div class="lid"></div><div class="pot"></div>
+    </div>
+    <div class="card px-8 py-2"><span id="clock" class="text-6xl font-black tabular-nums">5</span><span id="dec" class="text-xl tabular-nums" style="color:var(--sub)">.0</span></div>
+    <div id="res6" class="min-h-[3rem] font-bold"></div>
+    <button id="b6" class="btn red text-xl px-10 py-4" onclick="stop()">立即關火</button>
+    <button id="r6" class="btn ghost hidden" onclick="steam()">重新挑戰</button>
+  </section>
+
+  <!-- 7 結算 -->
+  <section id="p7" class="page flex-1 flex-col items-center justify-center gap-4 text-center">
+    <div class="medal text-6xl">🏅</div>
+    <p class="text-sm tracking-widest" style="color:var(--sub)">恭喜出師</p>
+    <h2 class="text-3xl font-black" style="color:var(--wood)">老日香・百年匠人</h2>
+    <div class="card p-6 w-full max-w-sm">
+      <div id="resCake" class="cake mx-auto mb-4"></div>
+      <h3 id="resName" class="text-xl font-black"></h3>
+      <p id="resDesc" class="text-sm mt-2 leading-relaxed" style="color:var(--sub)"></p>
+    </div>
+    <button class="btn mt-2" onclick="reset()">再玩一次</button>
+  </section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+const S={item:null,stamp:null,sift:0,color:null};
+const NAMES={wish:'傳統心願糕仔',double:'老日香雙糕潤'};
+const STAMPS=['招財','富貴','心願','寶貝兔'];
+let cur=1,timer=null;
+$('dots').innerHTML=[2,3,4,5,6,7].map(i=>`<i class="w-2.5 h-2.5 rounded-full" style="background:var(--line);transition:.3s" data-d="${i}"></i>`).join('');
+const STAMPS_W=['闔','家','平','安'];
+
+function go(n){
+  clearInterval(timer);cancelAnimationFrame(timer);
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  $(n==4&&S.item=='wish'?'p4b':'p'+n).classList.add('on');cur=n;
+  $('dots').style.opacity=n>1&&n<7?1:0;
+  document.querySelectorAll('[data-d]').forEach(d=>d.style.background=+d.dataset.d<=n?'var(--green-d)':'var(--line)');
+  if(n==3)$('h3t').textContent=S.item=='wish'?'過篩熟糯米粉':'過篩糯米粉';
+  document.querySelector('[data-d="6"]').style.display=S.item=='wish'?'none':'';
+  if(n==5)prep5();
+  if(n==6)steam();
+  if(n==7)result();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function pickItem(k,el){
+  S.item=k;document.querySelectorAll('.pick').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');$('b2').disabled=false;
+}
+/* 過篩 */
+function sift(){
+  if(S.sift>=3)return;
+  S.sift++;const sv=$('sieve');sv.classList.remove('shake');void sv.offsetWidth;sv.classList.add('shake');
+  for(let i=0;i<26;i++){const f=document.createElement('span');f.className='flour';
+    f.style.left=(Math.random()*100)+'%';f.style.top=(Math.random()*20)+'px';f.style.animationDelay=(Math.random()*.4)+'s';
+    $('fx').appendChild(f);setTimeout(()=>f.remove(),1700);}
+  const p=Math.round(S.sift/3*100);
+  $('bar3').style.width=p+'%';$('pct3').textContent=p+'% / 100%';
+  $('pile').style.width=(40+S.sift*40)+'px';$('pile').style.height=(12+S.sift*14)+'px';
+  $('msg3').textContent=['米粉如雪飄落…','再一次，更細緻！','完美！糯米粉細如雲。'][S.sift-1];
+  if(S.sift==3){$('b3').disabled=true;setTimeout(()=>go(4),1500);}
+}
+/* 百草粉 */
+function herb(){
+  $('herbL').style.height='30%';$('b4').disabled=true;
+  $('t4').innerHTML='<div class="toast">香氣濃郁！傳統草本風味已融入</div>';
+  $('n4').classList.remove('hidden');
+}
+/* 心願糕：調色入模 */
+function pickColor(c,el){
+  S.color=c;document.querySelectorAll('.colorbtn').forEach(b=>b.classList.remove('on'));el.classList.add('on');
+  const f=$('fill');f.style.background=c=='brown'?'#a47349':'#fffefa';
+  if(!$('b4b').classList.contains('done')){f.style.width=f.style.height='60px';}
+  $('b4b').disabled=false;
+}
+function press(){
+  const f=$('fill');f.style.width=f.style.height='130px';
+  $('t4b').innerHTML='<div class="toast">熟米粉拌上麥芽糖，濕潤成團、香甜融入！</div>';
+  $('b4b').disabled=true;$('b4b').classList.add('done');$('n4b').classList.remove('hidden');
+  document.querySelectorAll('.colorbtn').forEach(b=>b.disabled=true);
+}
+function cls(x){return (S.item=='double'?'cake dbl'+(S.sesame?' sesame':''):'disc'+(S.color=='brown'?' brown':''))+' '+x}
+function fs(t){return t.length>2?'1.4rem':t.length>1?'2.2rem':'3.6rem'}
+function fill5(){
+  const c=$('cake');
+  if(S.item=='double'){S.sesame=true;c.className=cls('knock');c.style.fontSize='1rem';c.textContent='';$('f5').disabled=true;$('b5').disabled=false;return}c.className=cls('knock');c.style.fontSize='1.3rem';c.textContent='壓實！';
+  $('stamps').style.pointerEvents='none';$('f5').disabled=true;$('b5').disabled=false;
+}
+function after5(){go(S.item=='wish'?7:6)}
+function prep5(){
+  const w=S.item!='double';
+  $('stamps').innerHTML=(w?STAMPS_W:[]).map(t=>`<div class="stamp" style="${w?'font-size:2.4rem':t.length>2?'font-size:1rem':''}" onclick="pickStamp('${t}',this)">${t}</div>`).join('');
+  $('stamps').classList.toggle('red',w);$('stamps').style.display=w?'':'none';S.sesame=false;$('stamps').style.pointerEvents='';
+  $('h5t').textContent=w?'挑選木模字樣・壓實脫模':'灑上白芝麻・脫模';
+  $('f5').classList.remove('hidden');$('f5').textContent=w?'填粉壓實':'灑白芝麻';$('f5').disabled=w;$('b5').disabled=true;$('n5').classList.add('hidden');
+  $('n5').textContent=w?'完成成品':'送入蒸籠';
+  $('sub5').textContent=w?'一個字一副木模：填入拌好的粉團壓實，再敲模脫模，不需蒸煮':'在雙層糕面均勻灑上白芝麻，再敲模脫模';
+  const c=$('cake');c.className=cls('opacity-40');c.style.fontSize='1rem';c.textContent=w?'選一個壓模':'雙層糕胚';
+}
+/* 壓模 */
+function pickStamp(s,el){
+  S.stamp=s;document.querySelectorAll('.stamp').forEach(c=>c.classList.remove('sel'));el.classList.add('sel');
+  if(S.item=='double')$('b5').disabled=false;else $('f5').disabled=false;const c=$('cake');c.className=cls('opacity-40');c.style.fontSize='1rem';c.textContent='已選「'+s+'」';
+}
+function knock(){
+  const c=$('cake'),p=$('pow');$('b5').disabled=true;
+  c.className='';void c.offsetWidth;c.className=cls('knock');c.style.fontSize=fs(S.stamp||'');
+  p.style.display='block';p.style.animation='none';void p.offsetWidth;p.style.animation='';
+  setTimeout(()=>{c.textContent=S.stamp||'';},350);
+  setTimeout(()=>{p.style.display='none';$('n5').classList.remove('hidden');},1000);
+}
+/* 蒸煮 */
+function steam(){
+  const box=$('steamBox');box.innerHTML='';
+  for(let i=0;i<7;i++){const d=document.createElement('span');d.className='puff';
+    d.style.setProperty('--dx',(Math.random()*90-45)+'px');d.style.animationDelay=(i*.38)+'s';box.appendChild(d);}
+  $('res6').textContent='';$('b6').classList.remove('hidden');$('r6').classList.add('hidden');
+  const t0=performance.now(),T=5000;
+  const tick=now=>{
+    const rem=Math.max(0,T-(now-t0))/1000;S.rem=rem;
+    $('clock').textContent=Math.ceil(rem);$('dec').textContent='.'+Math.floor((rem%1)*10);
+    if(rem<=0){fail('late');return;}
+    timer=requestAnimationFrame(tick);
+  };
+  timer=requestAnimationFrame(tick);
+}
+function stop(){
+  cancelAnimationFrame(timer);
+  const s=Math.ceil(S.rem);
+  if(s===2){
+    $('res6').innerHTML='<div class="toast">火候剛剛好！第 2 秒關火 ✨</div>';
+    $('b6').classList.add('hidden');setTimeout(()=>go(7),1600);
+  }else fail(s>2?'early':'late');
+}
+function fail(t){
+  cancelAnimationFrame(timer);
+  $('res6').innerHTML='<div class="toast" style="background:#b5482f">'+(t=='early'?'太早關火，糕點太濕':'太晚關火，糕點太硬')+'，請重試！</div>';
+  $('b6').classList.add('hidden');$('r6').classList.remove('hidden');
+}
+/* 結算 */
+function result(){
+  const d=S.item=='double',st=S.stamp||'心願';
+  $('resCake').className=cls('mx-auto mb-4');
+  $('resCake').style.fontSize=d?'1rem':fs(st);$('resCake').textContent=d?'':st;
+  $('resName').textContent=NAMES[S.item||'wish']+(d?'':'・「'+st+'」');
+  $('resDesc').textContent=d
+   ?'雙層糯米軟Q濕潤，夾心百草粉香氣完美釋放，表面白芝麻增添香氣，入口先是米香、後韻是清雅草本，層次分明。'
+   :'熟米粉拌入麥芽糖、木模壓實脫模，成就一顆'+(S.color=='brown'?'綠豆糕':'白潤糕')+'，紅色「'+st+'」字樣清晰喜氣，粉感綿密細緻、軟Q濕潤，'+(S.color=='brown'?'帶著清雅豆香，':'')+'是恰到好處的古早心願滋味。';
+}
+function reset(){
+  S.item=S.stamp=null;S.sesame=false;S.sift=0;
+  $('b2').disabled=true;document.querySelectorAll('.pick,.stamp').forEach(c=>c.classList.remove('sel'));
+  $('bar3').style.width='0';$('pct3').textContent='0% / 100%';$('b3').disabled=false;$('pile').style.cssText+=';width:20px;height:0';
+  $('msg3').textContent='細緻米粉，才有綿密口感。點擊 3 次完成。';
+  $('herbL').style.height='0';$('b4').disabled=false;$('t4').innerHTML='';$('n4').classList.add('hidden');
+  S.color=null;document.querySelectorAll('.colorbtn').forEach(b=>{b.disabled=false;b.classList.remove('on')});$('fill').style.width=$('fill').style.height='0';$('t4b').innerHTML='';$('b4b').disabled=true;$('b4b').classList.remove('done');$('n4b').classList.add('hidden');
+  $('cake').className='cake opacity-40';$('cake').style.fontSize='1rem';$('cake').textContent='選一個壓模';
+  $('b5').disabled=true;$('n5').classList.add('hidden');
+  go(1);
+}
+</script>
+</body>
+</html>
